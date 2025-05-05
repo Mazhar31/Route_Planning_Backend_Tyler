@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Truck Routing</title>
+    <style>
+      .container {
+        max-width: 700px;
+        margin: 0 auto;
+        padding: 20px;
+      }
+      .form-group {
+        margin-bottom: 20px;
+      }
+      input,
+      button {
+        width: 100%;
+        padding: 10px;
+        margin-top: 10px;
+      }
+      .result {
+        margin-top: 20px;
+        padding: 15px;
+        background-color: #f1f1f1;
+        display: none;
+      }
+      .error {
+        color: red;
+        margin-top: 15px;
+      }
+      .loading {
+        text-align: center;
+        font-size: 20px;
+        font-weight: bold;
+        display: none;
+      }
+      table {
+        width: 100%;
+        margin-top: 20px;
+        border-collapse: collapse;
+      }
+      table,
+      th,
+      td {
+        border: 1px solid black;
+      }
+      th,
+      td {
+        padding: 10px;
+        text-align: left;
+      }
+      th {
+        background-color: #f4f4f4;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Truck Routing</h1>
+      <form id="routeForm">
+        <div class="form-group">
+          <label for="start_time">Start Time (HH:MM):</label>
+          <input
+            type="text"
+            id="start_time"
+            name="start_time"
+            placeholder="Enter start time (e.g., 08:00)"
+            required
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="start_url">Start Location URL:</label>
+          <input
+            type="text"
+            id="start_url"
+            name="start_url"
+            placeholder="Enter start location URL"
+            required
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="dump_url">Dump Location URL:</label>
+          <input
+            type="text"
+            id="dump_url"
+            name="dump_url"
+            placeholder="Enter dump location URL"
+            required
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="pit_url">Pit Location URL:</label>
+          <input
+            type="text"
+            id="pit_url"
+            name="pit_url"
+            placeholder="Enter pit location URL"
+            required
+          />
+        </div>
+
+        <button type="submit">Submit</button>
+      </form>
+
+      <div id="loading" class="loading">Loading, please wait...</div>
+      <div id="result" class="result"></div>
+      <div id="error" class="error"></div>
+    </div>
+
+    <script>
+      document
+        .getElementById("routeForm")
+        .addEventListener("submit", async function (event) {
+          event.preventDefault();
+          document.getElementById("loading").style.display = "block";
+          document.getElementById("error").style.display = "none";
+
+          const payload = {
+            start_url: document.getElementById("start_url").value,
+            start_time: document.getElementById("start_time").value,
+            dump_url: document.getElementById("dump_url").value,
+            pit_url: document.getElementById("pit_url").value,
+          };
+
+          try {
+            const response = await fetch(
+              "http://localhost:8000/get-multi-route",
+              {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(payload),
+              }
+            );
+
+            const data = await response.json();
+            document.getElementById("loading").style.display = "none";
+
+            if (response.ok) {
+              displayResult(data);
+            } else {
+              displayError(data.detail || "An error occurred.");
+            }
+          } catch (error) {
+            document.getElementById("loading").style.display = "none";
+            displayError("Error: Unable to fetch the data.");
+          }
+        });
+
+      function displayResult(data) {
+        const resultDiv = document.getElementById("result");
+        resultDiv.style.display = "block";
+
+        const routes = data.routes;
+        let tableContent = `
+          <h2>Itinerary Summary</h2>
+          <p><strong>Start Location:</strong> ${data.start_location.address}</p>
+          <p><strong>End Location:</strong> ${data.end_location.address}</p>
+          <p><strong>Start Time:</strong> ${data.start_time}</p>
+          <p><strong>Scheduled End Time:</strong> ${data.scheduled_end_time}</p>
+          <p><strong>Actual End Time:</strong> ${data.actual_end_time}</p>
+          <p><strong>Overtime Minutes:</strong> ${data.overtime_minutes}</p>
+          <p><strong>Total Trips:</strong> ${data.total_trips}</p>
+          <p><strong>Total Work Hours:</strong> ${data.work_hours}</p>
+          <h3>Route Steps:</h3>
+          <table>
+            <thead>
+              <tr>
+                <th>Action</th>
+                <th>Time Taken</th>
+                <th>Arrival Time</th>
+                <th>Type</th>
+              </tr>
+            </thead>
+            <tbody>
+        `;
+
+        routes.forEach((route) => {
+          route.steps.forEach((step) => {
+            tableContent += `
+              <tr>
+                <td>${step.action}</td>
+                <td>${step.time_taken}</td>
+                <td>${step.arrival_time}</td>
+                <td>${step.action.includes("Load") ? "Load" : "Dump"}</td>
+              </tr>
+            `;
+          });
+        });
+
+        tableContent += "</tbody></table>";
+        resultDiv.innerHTML = tableContent;
+      }
+
+      function displayError(message) {
+        const errorDiv = document.getElementById("error");
+        errorDiv.style.display = "block";
+        errorDiv.innerHTML = message;
+      }
+    </script>
+  </body>
+</html>

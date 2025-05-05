@@ -1,0 +1,347 @@
+{
+  "start_location": {
+    "latitude": 50.11188,
+    "longitude": -120.788489,
+    "address": "1310 Voght St, Merritt, BC V1K 1B8, Canada"
+  },
+  "dump_location": {
+    "latitude": 50.081333,
+    "longitude": -120.772611,
+    "address": "Box 212, 757 Coldwater Rd, Thompson-Nicola N, BC V1K 1B8, Canada"
+  },
+  "pit_results": [
+    {
+      "pit_index": 1,
+      "pit_name": "Pit 1",
+      "pit_address": "3136 Aberdeen Rd, Thompson-Nicola M (Beautiful *, BC V0K 1Y0, Canada",
+      "latitude": 50.185472,
+      "longitude": -120.877887,
+      "routes": [
+        {
+          "trip": 1,
+          "steps": [
+            {
+              "action": "Travel to Pit 1",
+              "time_taken": "13 mins",
+              "arrival_time": "06:43",
+              "distance": "12.8 km",
+              "distance_km": 12.8,
+              "route_url": "https://www.google.com/maps/dir/?api=1&origin=50.11188,-120.788489&destination=50.185472,-120.877887&travelmode=driving",
+              "time_format": "00:13"
+            },
+            {
+              "action": "Load at Pit 1",
+              "time_taken": "20 minutes",
+              "arrival_time": "07:03"
+            },
+            {
+              "action": "Travel to Dump Site",
+              "time_taken": "18 mins",
+              "arrival_time": "07:21",
+              "distance": "17.7 km",
+              "distance_km": 17.7,
+              "route_url": "https://www.google.com/maps/dir/?api=1&origin=50.185472,-120.877887&destination=50.081333,-120.772611&travelmode=driving",
+              "time_format": "00:18"
+            },
+            {
+              "action": "Unload at Dump Site",
+              "time_taken": "20 minutes",
+              "arrival_time": "07:41"
+            },
+            {
+              "action": "Return to Pit 1",
+              "time_taken": "18 mins",
+              "arrival_time": "08:00",
+              "distance": "17.7 km",
+              "distance_km": 17.7,
+              "route_url": "https://www.google.com/maps/dir/?api=1&origin=50.081333,-120.772611&destination=50.185472,-120.877887&travelmode=driving",
+              "time_format": "00:18"
+            }
+          ],
+          "type": "work_cycle"
+        },
+        {
+          "trip": 2,
+          "steps": [
+            {
+              "action": "Load at Pit 1",
+              "time_taken": "20 minutes",
+              "arrival_time": "08:20"
+            },
+            {
+              "action": "Travel to Dump Site",
+              "time_taken": "18 mins",
+              "arrival_time": "08:39",
+              "distance": "17.7 km",
+              "distance_km": 17.7,
+              "route_url": "https://www.google.com/maps/dir/?api=1&origin=50.185472,-120.877887&destination=50.081333,-120.772611&travelmode=driving",
+              "time_format": "00:18"
+            },
+            {
+              "action": "Unload at Dump Site",
+              "time_taken": "20 minutes",
+              "arrival_time": "08:59"
+            },
+            {
+              "action": "Return to Pit 1",
+              "time_taken": "18 mins",
+              "arrival_time": "09:17",
+              "distance": "17.7 km",
+              "distance_km": 17.7,
+              "route_url": "https://www.google.com/maps/dir/?api=1&origin=50.081333,-120.772611&destination=50.185472,-120.877887&travelmode=driving",
+              "time_format": "00:18"
+            }
+          ],
+          "type": "work_cycle"
+        },
+        {
+          "trip": 3,
+          "steps": [
+            {
+              "action": "Load at Pit 1",
+              "time_taken": "20 minutes",
+              "arrival_time": "09:37"
+            },
+            {
+              "action": "Travel to Dump Site",
+              "time_taken": "18 mins",
+              "arrival_time": "09:56",
+              "distance": "17.7 km",
+              "distance_km": 17.7,
+              "route_url": "https://www.google.com/maps/dir/?api=1&origin=50.185472,-120.877887&destination=50.081333,-120.772611&travelmode=driving",
+              "time_format": "00:18"
+            },
+            {
+              "action": "Unload at Dump Site",
+              "time_taken": "20 minutes",
+              "arrival_time": "10:16"
+            },
+            {
+              "action": "Return to Pit 1",
+              "time_taken": "18 mins",
+              "arrival_time": "10:35",
+              "distance": "17.7 km",
+              "distance_km": 17.7,
+              "route_url": "https://www.google.com/maps/dir/?api=1&origin=50.081333,-120.772611&destination=50.185472,-120.877887&travelmode=driving",
+              "time_format": "00:18"
+            }
+          ],
+          "type": "work_cycle"
+        },
+        {
+          "trip": 4,
+          "steps": [
+            {
+              "action": "Load at Pit 1",
+              "time_taken": "20 minutes",
+              "arrival_time": "10:55"
+            },
+            {
+              "action": "Travel to Dump Site",
+              "time_taken": "18 mins",
+              "arrival_time": "11:14",
+              "distance": "17.7 km",
+              "distance_km": 17.7,
+              "route_url": "https://www.google.com/maps/dir/?api=1&origin=50.185472,-120.877887&destination=50.081333,-120.772611&travelmode=driving",
+              "time_format": "00:18"
+            },
+            {
+              "action": "Unload at Dump Site",
+              "time_taken": "20 minutes",
+              "arrival_time": "11:34"
+            },
+            {
+              "action": "Return to Pit 1",
+              "time_taken": "18 mins",
+              "arrival_time": "11:52",
+              "distance": "17.7 km",
+              "distance_km": 17.7,
+              "route_url": "https://www.google.com/maps/dir/?api=1&origin=50.081333,-120.772611&destination=50.185472,-120.877887&travelmode=driving",
+              "time_format": "00:18"
+            }
+          ],
+          "type": "work_cycle"
+        },
+        {
+          "trip": 5,
+          "steps": [
+            {
+              "action": "Load at Pit 1",
+              "time_taken": "20 minutes",
+              "arrival_time": "12:12"
+            },
+            {
+              "action": "Travel to Dump Site",
+              "time_taken": "18 mins",
+              "arrival_time": "12:31",
+              "distance": "17.7 km",
+              "distance_km": 17.7,
+              "route_url": "https://www.google.com/maps/dir/?api=1&origin=50.185472,-120.877887&destination=50.081333,-120.772611&travelmode=driving",
+              "time_format": "00:18"
+            },
+            {
+              "action": "Unload at Dump Site",
+              "time_taken": "20 minutes",
+              "arrival_time": "12:51"
+            },
+            {
+              "action": "Return to Pit 1",
+              "time_taken": "18 mins",
+              "arrival_time": "13:10",
+              "distance": "17.7 km",
+              "distance_km": 17.7,
+              "route_url": "https://www.google.com/maps/dir/?api=1&origin=50.081333,-120.772611&destination=50.185472,-120.877887&travelmode=driving",
+              "time_format": "00:18"
+            }
+          ],
+          "type": "work_cycle"
+        },
+        {
+          "trip": 6,
+          "steps": [
+            {
+              "action": "Load at Pit 1",
+              "time_taken": "20 minutes",
+              "arrival_time": "13:30"
+            },
+            {
+              "action": "Travel to Dump Site",
+              "time_taken": "18 mins",
+              "arrival_time": "13:48",
+              "distance": "17.7 km",
+              "distance_km": 17.7,
+              "route_url": "https://www.google.com/maps/dir/?api=1&origin=50.185472,-120.877887&destination=50.081333,-120.772611&travelmode=driving",
+              "time_format": "00:18"
+            },
+            {
+              "action": "Unload at Dump Site",
+              "time_taken": "20 minutes",
+              "arrival_time": "14:08"
+            },
+            {
+              "action": "Return to Pit 1",
+              "time_taken": "18 mins",
+              "arrival_time": "14:27",
+              "distance": "17.7 km",
+              "distance_km": 17.7,
+              "route_url": "https://www.google.com/maps/dir/?api=1&origin=50.081333,-120.772611&destination=50.185472,-120.877887&travelmode=driving",
+              "time_format": "00:18"
+            }
+          ],
+          "type": "work_cycle"
+        },
+        {
+          "trip": 7,
+          "steps": [
+            {
+              "action": "Load at Pit 1",
+              "time_taken": "20 minutes",
+              "arrival_time": "14:47"
+            },
+            {
+              "action": "Travel to Dump Site",
+              "time_taken": "18 mins",
+              "arrival_time": "15:06",
+              "distance": "17.7 km",
+              "distance_km": 17.7,
+              "route_url": "https://www.google.com/maps/dir/?api=1&origin=50.185472,-120.877887&destination=50.081333,-120.772611&travelmode=driving",
+              "time_format": "00:18"
+            },
+            {
+              "action": "Unload at Dump Site",
+              "time_taken": "20 minutes",
+              "arrival_time": "15:26"
+            },
+            {
+              "action": "Return to Pit 1",
+              "time_taken": "18 mins",
+              "arrival_time": "15:44",
+              "distance": "17.7 km",
+              "distance_km": 17.7,
+              "route_url": "https://www.google.com/maps/dir/?api=1&origin=50.081333,-120.772611&destination=50.185472,-120.877887&travelmode=driving",
+              "time_format": "00:18"
+            }
+          ],
+          "type": "work_cycle"
+        },
+        {
+          "trip": 8,
+          "steps": [
+            {
+              "action": "Load at Pit 1",
+              "time_taken": "20 minutes",
+              "arrival_time": "16:04"
+            },
+            {
+              "action": "Travel to Dump Site",
+              "time_taken": "18 mins",
+              "arrival_time": "16:23",
+              "distance": "17.7 km",
+              "distance_km": 17.7,
+              "route_url": "https://www.google.com/maps/dir/?api=1&origin=50.185472,-120.877887&destination=50.081333,-120.772611&travelmode=driving",
+              "time_format": "00:18"
+            },
+            {
+              "action": "Unload at Dump Site",
+              "time_taken": "20 minutes",
+              "arrival_time": "16:43"
+            },
+            {
+              "action": "Return to Pit 1",
+              "time_taken": "18 mins",
+              "arrival_time": "17:02",
+              "distance": "17.7 km",
+              "distance_km": 17.7,
+              "route_url": "https://www.google.com/maps/dir/?api=1&origin=50.081333,-120.772611&destination=50.185472,-120.877887&travelmode=driving",
+              "time_format": "00:18"
+            }
+          ],
+          "type": "work_cycle"
+        },
+        {
+          "trip": 9,
+          "steps": [
+            {
+              "action": "Return to Base",
+              "time_taken": "13 mins",
+              "arrival_time": "17:15",
+              "distance": "12.8 km",
+              "distance_km": 12.8,
+              "route_url": "https://www.google.com/maps/dir/?api=1&origin=50.185472,-120.877887&destination=50.11188,-120.788489&travelmode=driving",
+              "time_format": "00:13"
+            }
+          ],
+          "type": "return_to_base"
+        }
+      ],
+      "actual_end_time": "17:15",
+      "overtime_minutes": 45,
+      "total_trips": 8,
+      "route_info": {
+        "start_to_pit": {
+          "distance_km": 12.8,
+          "time_format": "00:13",
+          "route_url": "https://www.google.com/maps/dir/?api=1&origin=50.11188,-120.788489&destination=50.185472,-120.877887&travelmode=driving"
+        },
+        "pit_to_dump": {
+          "distance_km": 17.7,
+          "time_format": "00:18",
+          "route_url": "https://www.google.com/maps/dir/?api=1&origin=50.185472,-120.877887&destination=50.081333,-120.772611&travelmode=driving"
+        },
+        "dump_to_pit": {
+          "distance_km": 17.7,
+          "time_format": "00:18",
+          "route_url": "https://www.google.com/maps/dir/?api=1&origin=50.081333,-120.772611&destination=50.185472,-120.877887&travelmode=driving"
+        },
+        "dump_to_start": {
+          "distance_km": 4.9,
+          "time_format": "00:05",
+          "route_url": "https://www.google.com/maps/dir/?api=1&origin=50.081333,-120.772611&destination=50.11188,-120.788489&travelmode=driving"
+        }
+      }
+    }
+  ],
+  "start_time": "06:30",
+  "scheduled_end_time": "16:30",
+  "work_hours": 10
+}
