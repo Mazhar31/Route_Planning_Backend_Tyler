@@ -2,5 +2,4 @@ __pycache__
 .env
 venv
 main_o.py
-main.py
 sheets.json
