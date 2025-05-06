@@ -8,3 +8,5 @@ google-cloud-firestore
 requests
 python-dotenv
 gspread
+selenium
+chromedriver-autoinstaller
