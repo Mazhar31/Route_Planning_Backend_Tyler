@@ -5,40 +5,92 @@ import requests
 from urllib.parse import urlparse, parse_qs
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
+import os
 
 from app.config import GOOGLE_API_KEY
 
 # Set up logging
 logger = logging.getLogger("app.geo")
 
-def unshorten_url(short_url, retries=3, delay=2, wait_time=5):
+# def unshorten_url(short_url, retries=3, delay=2, wait_time=5):
+#     """
+#     Uses a headless browser to fully load a short Google Maps URL
+#     and extract the final, fully updated URL with accurate coordinates.
+#     """
+#     for attempt in range(retries):
+#         try:
+#             logger.debug(f"Attempt {attempt + 1}: Trying to unshorten URL via Selenium: {short_url}")
+
+#             options = webdriver.ChromeOptions()
+#             options.add_argument("--headless")
+#             options.add_argument("--disable-notifications")
+#             options.add_argument("--disable-gpu")
+#             options.add_argument("--no-sandbox")
+
+#             options.add_argument("--disable-dev-shm-usage")
+#             options.add_argument(f"--user-data-dir=/tmp/chrome-user-data-{os.getpid()}")
+#             options.add_argument("--remote-debugging-port=9222")
+
+#             service = webdriver.ChromeService(
+#                 executable_path="/usr/local/bin/chromedriver",
+#                 log_path="/tmp/chromedriver.log",
+#                 service_args=["--verbose"]
+#             )
+
+#             driver = webdriver.Chrome(options=options, service=service)
+#             driver.get(short_url)
+
+#             time.sleep(wait_time)  # Wait for page to load and URL to update
+
+#             final_url = driver.current_url
+#             logger.debug(f"Selenium unshortened URL: {final_url}")
+#             driver.quit()
+
+#             return final_url
+
+#         except Exception as e:
+#             logger.error(f"[Attempt {attempt + 1}] Selenium failed to unshorten URL: {e}")
+#             time.sleep(delay)
+
+#     return None
+
+def unshorten_url(short_url, retries=3, delay=2):
     """
-    Uses a headless browser to fully load a short Google Maps URL
-    and extract the final, fully updated URL with accurate coordinates.
+    Uses requests to follow redirects and get the final URL
+    instead of using Selenium for better compatibility with Cloud Run.
     """
     for attempt in range(retries):
         try:
-            logger.debug(f"Attempt {attempt + 1}: Trying to unshorten URL via Selenium: {short_url}")
-
-            options = webdriver.ChromeOptions()
-            options.add_argument("--headless")
-            options.add_argument("--disable-notifications")
-            options.add_argument("--disable-gpu")
-            options.add_argument("--no-sandbox")
-
-            driver = webdriver.Chrome(options=options)
-            driver.get(short_url)
-
-            time.sleep(wait_time)  # Wait for page to load and URL to update
-
-            final_url = driver.current_url
-            logger.debug(f"Selenium unshortened URL: {final_url}")
-            driver.quit()
-
+            logger.debug(f"Attempt {attempt + 1}: Trying to unshorten URL via requests: {short_url}")
+            
+            headers = {
+                'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36',
+                'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+                'Accept-Language': 'en-US,en;q=0.5',
+                'DNT': '1',
+                'Connection': 'keep-alive',
+                'Upgrade-Insecure-Requests': '1',
+                'Sec-Fetch-Dest': 'document',
+                'Sec-Fetch-Mode': 'navigate',
+                'Sec-Fetch-Site': 'none',
+                'Sec-Fetch-User': '?1',
+                'Cache-Control': 'max-age=0',
+            }
+            
+            response = requests.get(
+                short_url, 
+                headers=headers, 
+                allow_redirects=True,
+                timeout=10
+            )
+            
+            final_url = response.url
+            logger.debug(f"Requests unshortened URL: {final_url}")
+            
             return final_url
 
         except Exception as e:
-            logger.error(f"[Attempt {attempt + 1}] Selenium failed to unshorten URL: {e}")
+            logger.error(f"[Attempt {attempt + 1}] Requests failed to unshorten URL: {e}")
             time.sleep(delay)
 
     return None

@@ -32,13 +32,26 @@ def find_next_empty_row(sheet):
 def write_locations_section(sheet, start_location, dump_location, pit_result, package):
     start_row = find_next_empty_row(sheet)
 
+    # Add the title header - Send as nested list structure as required by Sheets API
     sheet.update(f"A{start_row}", [["LOCATIONS: START OF DAY, LOAD SITE, DUMP SITE, END OF DAY"]])
-    sheet.format(f"A{start_row}", {"textFormat": {"bold": True}, "backgroundColor": {"red": 0.2, "green": 0.5, "blue": 0.7}})
+    
+    # Merge cells A to I in the header row
+    sheet.merge_cells(f"A{start_row}:I{start_row}")
+    
+    # Apply formatting - blue background, white text, bold, and center aligned
+    sheet.format(f"A{start_row}:I{start_row}", {
+        "textFormat": {"bold": True, "foregroundColor": {"red": 1.0, "green": 1.0, "blue": 1.0}},
+        "backgroundColor": {"red": 20/255, "green": 95/255, "blue": 130/255},
+        "horizontalAlignment": "CENTER",
+        "verticalAlignment": "MIDDLE"
+    })
 
+    # Add sub-headers - Keep as nested list
     headers = [["Location", "Activity", "LAT/LONG", "Location: Google Map Link"]]
     sheet.update(f"A{start_row+1}:D{start_row+1}", headers)
     sheet.format(f"A{start_row+1}:D{start_row+1}", {"textFormat": {"bold": True}})
 
+    # Add the data rows (unchanged)
     rows = [
         [start_location["address"], "Start of Day", f'{start_location["latitude"]}, {start_location["longitude"]}', f'https://www.google.com/maps?q={start_location["latitude"]},{start_location["longitude"]}'],
         [start_location["address"], "End of Day", f'{start_location["latitude"]}, {start_location["longitude"]}', f'https://www.google.com/maps?q={start_location["latitude"]},{start_location["longitude"]}'],
@@ -51,13 +64,26 @@ def write_locations_section(sheet, start_location, dump_location, pit_result, pa
 def write_distance_section(sheet, start_location, dump_location, pit_result):
     start_row = find_next_empty_row(sheet)
 
+    # Add the title header and apply formatting - Keep as nested list
     sheet.update(f"A{start_row}", [["DISTANCE/SPEED/TIME TRAVELLED DOMESTIC VEHICLE"]])
-    sheet.format(f"A{start_row}", {"textFormat": {"bold": True}, "backgroundColor": {"red": 0.2, "green": 0.5, "blue": 0.7}})
+    
+    # Merge cells A to I in the header row
+    sheet.merge_cells(f"A{start_row}:I{start_row}")
+    
+    # Apply formatting - blue background, white text, bold, and center aligned
+    sheet.format(f"A{start_row}:I{start_row}", {
+        "textFormat": {"bold": True, "foregroundColor": {"red": 1.0, "green": 1.0, "blue": 1.0}},
+        "backgroundColor": {"red": 20/255, "green": 95/255, "blue": 130/255},
+        "horizontalAlignment": "CENTER",
+        "verticalAlignment": "MIDDLE"
+    })
 
+    # Add sub-headers - Keep as nested list
     headers = [["", "", "", "Distance (km)", "Time (HH:MM)", "Route"]]
-    sheet.update(f"A{start_row+1}:G{start_row+1}", headers)
-    sheet.format(f"A{start_row+1}:G{start_row+1}", {"textFormat": {"bold": True}})
+    sheet.update(f"A{start_row+1}:F{start_row+1}", headers)
+    sheet.format(f"A{start_row+1}:F{start_row+1}", {"textFormat": {"bold": True}})
 
+    # Add the data rows (unchanged)
     ri = pit_result["route_info"]
     rows = [
         ["START --> LOAD", f'{start_location["latitude"]}, {start_location["longitude"]}', ri["start_to_pit"]["route_url"].split("destination=")[-1].split("&")[0], ri["start_to_pit"]["distance_km"], ri["start_to_pit"]["time_format"], ri["start_to_pit"]["route_url"]],
@@ -65,7 +91,7 @@ def write_distance_section(sheet, start_location, dump_location, pit_result):
         ["DUMP --> LOAD", ri["pit_to_dump"]["route_url"].split("destination=")[-1].split("&")[0], ri["dump_to_pit"]["route_url"].split("destination=")[-1].split("&")[0], ri["dump_to_pit"]["distance_km"], ri["dump_to_pit"]["time_format"], ri["dump_to_pit"]["route_url"]],
         ["DUMP --< END", ri["dump_to_pit"]["route_url"].split("destination=")[-1].split("&")[0], f'{start_location["latitude"]}, {start_location["longitude"]}', ri["dump_to_start"]["distance_km"], ri["dump_to_start"]["time_format"], ri["dump_to_start"]["route_url"]],
     ]
-    sheet.update(f"A{start_row+2}:G{start_row+5}", rows)
+    sheet.update(f"A{start_row+2}:F{start_row+5}", rows)
 
 
 def write_schedule_section(sheet, pit_result, start_time_str, adjust_time, load_size, rate_per_tonne, total_trips):
@@ -73,9 +99,21 @@ def write_schedule_section(sheet, pit_result, start_time_str, adjust_time, load_
     start_row = find_next_empty_row(sheet)
     truck_earning = load_size * rate_per_tonne
 
+    # Add the title header and apply formatting - Keep as nested list
     sheet.update(f"A{start_row}", [["ESTIMATED DAILY SCHEDULE + DAILY/HOURLY REVENUE"]])
-    sheet.format(f"A{start_row}", {"textFormat": {"bold": True}, "backgroundColor": {"red": 0.2, "green": 0.5, "blue": 0.7}})
+    
+    # Merge cells A to I in the header row
+    sheet.merge_cells(f"A{start_row}:I{start_row}")
+    
+    # Apply formatting - blue background, white text, bold, and center aligned
+    sheet.format(f"A{start_row}:I{start_row}", {
+        "textFormat": {"bold": True, "foregroundColor": {"red": 1.0, "green": 1.0, "blue": 1.0}},
+        "backgroundColor": {"red": 20/255, "green": 95/255, "blue": 130/255},
+        "horizontalAlignment": "CENTER",
+        "verticalAlignment": "MIDDLE"
+    })
 
+    # Keep headers as nested list
     headers = [["Location", "Total Time", "Buffer", "Load/Dump", "Next Stop", "Truck Revenue", "Total Tonnes"]]
     sheet.update(f"A{start_row+1}:G{start_row+1}", headers)
     sheet.format(f"A{start_row+1}:G{start_row+1}", {"textFormat": {"bold": True}})
@@ -84,7 +122,8 @@ def write_schedule_section(sheet, pit_result, start_time_str, adjust_time, load_
     current_time = datetime.strptime(start_time_str, "%H:%M")
     total_minutes = 0
 
-    rows.append(["Start of Day", "", current_time.strftime("%I:%M:%S %p"), "", "(START --> LOAD)", ""])
+    # Ensure Start of Day row has correct number of elements (7 columns: A-G)
+    rows.append(["Start of Day", "", current_time.strftime("%I:%M:%S %p"), "", "(START --> LOAD)", "", ""])
 
     for i, route in enumerate(pit_result["routes"]):
         steps = route["steps"]
@@ -101,6 +140,7 @@ def write_schedule_section(sheet, pit_result, start_time_str, adjust_time, load_
                     EXTRA_TIME = (trip_total/100) * adjust_time
                 current_time += timedelta(minutes=(trip_total+EXTRA_TIME))
                 total_minutes += (trip_total + EXTRA_TIME)
+                # Ensure 7 columns for this row
                 rows.append(["Load Site -Clean Pit", f"{trip_total//60}:{str(trip_total%60).zfill(2)}", current_time.strftime("%I:%M:%S %p"), "Load", "(LOAD --> DUMP)", "", load_size])
             else:
                 return_to_pit = next((s for s in steps if "Return to Pit" in s["action"]), None)
@@ -112,6 +152,7 @@ def write_schedule_section(sheet, pit_result, start_time_str, adjust_time, load_
                     EXTRA_TIME = (trip_total/100) * adjust_time
                 current_time += timedelta(minutes=(trip_total+EXTRA_TIME))
                 total_minutes += (trip_total + EXTRA_TIME)
+                # Ensure 7 columns for this row
                 rows.append(["Load Site -Clean Pit", f"{trip_total//60}:{str(trip_total%60).zfill(2)}", current_time.strftime("%I:%M:%S %p"), "Load", "(LOAD --> DUMP)", "", load_size])
 
             travel_to_dump = next((s for s in steps if "Travel to Dump" in s["action"]), None)
@@ -123,6 +164,7 @@ def write_schedule_section(sheet, pit_result, start_time_str, adjust_time, load_
                 EXTRA_TIME = (trip_total/100) * adjust_time
             current_time += timedelta(minutes=(trip_total+EXTRA_TIME))
             total_minutes += (trip_total + EXTRA_TIME)
+            # Ensure 7 columns for this row
             rows.append(["Dump Site", f"{trip_total//60}:{str(trip_total%60).zfill(2)}", current_time.strftime("%I:%M:%S %p"), "Dump", "(DUMP --> LOAD)", truck_earning, ""])
 
         elif trip_type == "return_to_base":
@@ -132,7 +174,8 @@ def write_schedule_section(sheet, pit_result, start_time_str, adjust_time, load_
                 EXTRA_TIME = (return_minutes/100) * adjust_time
             current_time += timedelta(minutes=(return_minutes+EXTRA_TIME))
             total_minutes += (return_minutes + EXTRA_TIME)
-            rows.append(["End of Day", f"{return_minutes//60}:{str(return_minutes%60).zfill(2)}", current_time.strftime("%I:%M:%S %p"), "", "(DUMP --< END)", ""])
+            # Ensure 7 columns for this row
+            rows.append(["End of Day", f"{return_minutes//60}:{str(return_minutes%60).zfill(2)}", current_time.strftime("%I:%M:%S %p"), "", "(DUMP --< END)", "", ""])
 
         elif trip_type == "final_trip":
             travel_to_pit = next((s for s in steps if "Travel to Pit" in s["action"]), None)
@@ -161,6 +204,7 @@ def write_schedule_section(sheet, pit_result, start_time_str, adjust_time, load_
                     EXTRA_TIME = (load_minutes / 100) * adjust_time
                 current_time += timedelta(minutes=(load_minutes + EXTRA_TIME))
                 total_minutes += (load_minutes + EXTRA_TIME)
+                # Ensure 7 columns for this row
                 rows.append(["Load Site -Clean Pit", f"{int(load_minutes)//60}:{str(int(load_minutes)%60).zfill(2)}", current_time.strftime("%I:%M:%S %p"), "Load", "(LOAD --> DUMP)", "", load_size])
 
             # Dump Site row = travel to dump + unload
@@ -174,6 +218,7 @@ def write_schedule_section(sheet, pit_result, start_time_str, adjust_time, load_
                     EXTRA_TIME = (dump_minutes / 100) * adjust_time
                 current_time += timedelta(minutes=(dump_minutes + EXTRA_TIME))
                 total_minutes += (dump_minutes + EXTRA_TIME)
+                # Ensure 7 columns for this row
                 rows.append(["Dump Site", f"{int(dump_minutes)//60}:{str(int(dump_minutes)%60).zfill(2)}", current_time.strftime("%I:%M:%S %p"), "Dump", "(DUMP --> END)", truck_earning, ""])
 
             # Return to Base
@@ -183,17 +228,23 @@ def write_schedule_section(sheet, pit_result, start_time_str, adjust_time, load_
                     EXTRA_TIME = (return_minutes / 100) * adjust_time
                 current_time += timedelta(minutes=(return_minutes + EXTRA_TIME))
                 total_minutes += (return_minutes + EXTRA_TIME)
-                rows.append(["End of Day", f"{return_minutes//60}:{str(return_minutes%60).zfill(2)}", current_time.strftime("%I:%M:%S %p"), "", "(DUMP --< END)", ""])
-                rows.append([])
+                # Ensure 7 columns for this row
+                rows.append(["End of Day", f"{return_minutes//60}:{str(return_minutes%60).zfill(2)}", current_time.strftime("%I:%M:%S %p"), "", "(DUMP --< END)", "", ""])
+                # Empty row also needs 7 columns
+                rows.append(["", "", "", "", "", "", ""])
 
     total_minutes = int(total_minutes)
     sheet.update(f"A{start_row+2}:G{start_row+2+len(rows)-1}", rows)
     print("total minutes at the end of the day: ", total_minutes)
-    sheet.update(f"A{start_row+2+len(rows)}:G{start_row+2+len(rows)}", [["TOTAL", "", f"{total_minutes//60}:{str(total_minutes%60).zfill(2)}", "", "", f"${truck_earning * total_trips}"]])
+    
+    # Make sure these have 7 elements, not 6
 
-    # Add an empty row after the "Total" row
-    sheet.update(f"A{start_row+2+len(rows)+1}:G{start_row+2+len(rows)+1}", [["", "", "", "", "", ""]])
+    sheet.update(f"A{start_row+2+len(rows)}:G{start_row+2+len(rows)}", [["TOTAL", "", f"{total_minutes//60}:{str(total_minutes%60).zfill(2)}", "", "", f"${truck_earning * total_trips}", ""]])
 
-    # Calculate hourly rate and update the "Hourly Rate" row
+    # Add an empty row after the "Total" row - ensure 7 columns
+    sheet.update(f"A{start_row+2+len(rows)+1}:G{start_row+2+len(rows)+1}", [["", "", "", "", "", "", ""]])
+
+    # Calculate hourly rate and update the "Hourly Rate" row - ensure 7 columns
     hourly_rate = truck_earning * total_trips / (total_minutes / 60) if total_minutes > 0 else 0
-    sheet.update(f"A{start_row+2+len(rows)+2}:G{start_row+2+len(rows)+2}", [["Hourly Rate", "", "", "", "", f"${hourly_rate:.2f}"]])
+    sheet.update(f"A{start_row+2+len(rows)+2}:G{start_row+2+len(rows)+2}", [["Hourly Rate", "", "", "", "", f"${hourly_rate:.2f}", ""]])
+
